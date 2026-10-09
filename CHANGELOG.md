@@ -21,4 +21,4 @@ All notable changes to this project are documented in this file.
 
 ### Licensing
 
-- 原创应用代码采用 MIT；Wiki 衍生数据按上游许可标注。游戏图片、动画、音频及原文仅用于展示游戏资料，版权归魔方工作室群、洛克王国世界项目组及其关联公司、组织。
+- 原创应用代码采用 MIT；Wiki 衍生数据采用 CC BY-SA 4.0。游戏图片、动画、音频及原文仅用于展示游戏资料，版权归魔方工作室群、洛克王国世界项目组及其关联公司、组织。

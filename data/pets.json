@@ -19437,6 +19437,6 @@
     "mapping_method": "位置相关双映射表(基于15个已知样本验证)",
     "note": "重量单位为克(g),显示时除以1000转换为kg,保留3位小数",
     "attribute_source": "Rocom Wiki Data published dataset; WIKI attributes matched by Pokédex number and title, then normalized by removing the 系 suffix.",
-    "attribute_license": "CC BY-NC-SA 4.0"
+    "attribute_license": "CC BY-SA 4.0"
   }
 }
