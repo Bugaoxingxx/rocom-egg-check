@@ -15,7 +15,7 @@
 
 页面使用 `rocokingdom-ui` 的 `RocoTheme`、`Input`、`Button`，并加载组件库样式、字体及默认 paper / stone / primary 配色。自定义 CSS 控制布局、间距、结果卡片和静态蛋重可视化。
 
-数据读取自独立的 `../data/pets.json`，每条精灵记录包含归一化后的属性值。属性数据按图鉴编号与名称匹配 Rocom Wiki Data 发布的 Wiki 图鉴数据；上游 Wiki 数据及其衍生内容遵循 CC BY-NC-SA 4.0。蛋组色、属性色和属性图标沿用 Rocom-Shiny-Helper；颜色与图标来源采用 MIT 许可。来源和许可说明见 `THIRD-PARTY-NOTICES.md`。
+数据读取自独立的 `../data/pets.json`，每条精灵记录包含归一化后的属性值。属性数据按图鉴编号与名称匹配 Rocom Wiki Data 发布的 Wiki 图鉴数据，该数据集声明 Wiki 衍生数据采用 CC BY-NC-SA 4.0。直接取自 Wiki 的资料应按对应页面声明的许可记录来源。蛋组色、属性色和属性图标沿用 Rocom-Shiny-Helper；颜色与图标来源采用 MIT 许可。来源和许可范围见 `../DATA-LICENSES.md` 与 `THIRD-PARTY-NOTICES.md`。
 
 组件库 npm 元数据声明 MIT 许可；正式发行时应保留对应 MIT 许可与版权声明。
 

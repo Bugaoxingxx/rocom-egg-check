@@ -36,6 +36,14 @@ Licensed under the MIT License:
 
 ## Rocom Wiki Data and 洛克王国世界 WIKI
 
-The `attributes` field added to `../data/pets.json` was matched by Pokédex number and title against the published [Rocom Wiki Data dataset](https://jayegt002.github.io/rocom-wiki-data/data/pets.json). The source project documents these fields as Wiki-derived pet attributes and states that Wiki data and derivative content are licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+The `attributes` field added to `../data/pets.json` was matched by Pokédex number and title against the published [Rocom Wiki Data dataset](https://github.com/JayeGT002/rocom-wiki-data). That dataset's [`LICENSE`](https://github.com/JayeGT002/rocom-wiki-data/blob/main/LICENSE) states that its WIKI-derived data and derivatives use [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). The [rocom WIKI homepage](https://wiki.biligame.com/rocom/%E9%A6%96%E9%A1%B5) also states CC BY-NC-SA 4.0. The newer [nrc WIKI site declaration](https://wiki.biligame.com/nrc/%E6%B4%9B%E5%85%8B%E7%8E%8B%E5%9B%BD%E4%B8%96%E7%95%8C:%E7%AB%99%E7%82%B9%E5%A3%B0%E6%98%8E) states CC BY-SA 4.0 for original text and authorized data, and excludes game and third-party media. Because this app's attribute values came through the Rocom Wiki Data dataset, this app preserves the dataset's declared CC BY-NC-SA 4.0 terms. For any material taken directly from another WIKI page, record that page and follow its specific declaration.
 
-Attribution: 洛克王国世界 WIKI contributors; data compilation by JayeGT002 in [rocom-wiki-data](https://github.com/JayeGT002/rocom-wiki-data). The Wiki-derived attribute data in this application must retain attribution, be used non-commercially, and be shared under CC BY-NC-SA 4.0.
+Attribution: 洛克王国世界 WIKI contributors; data compilation by JayeGT002 in [rocom-wiki-data](https://github.com/JayeGT002/rocom-wiki-data). The attribute values matched from that dataset retain its CC BY-NC-SA 4.0 terms: attribution, non-commercial use, and share-alike. The source and license are in the JSON file's top-level metadata. These values are not relicensed by the application's MIT License. See [`../DATA-LICENSES.md`](../DATA-LICENSES.md) for the source-specific license distinction.
+
+## rocokingdom-ui
+
+The application uses the `rocokingdom-ui` npm package (version `0.0.1-beta.0`). Its npm package metadata declares the MIT License and credits Charles Lee. See the [upstream project](https://github.com/rookie-orange/rocokingdom-ui).
+
+## Game materials
+
+The files in `public/pet-portraits/` were collected from the [official game asset page](https://rocom.qq.com/act/a20250719icreate/images.html). Game images, animations, audio, and original game text used in this project are included only to better present game reference material. Their copyrights belong to 魔方工作室群、洛克王国世界项目组及其关联公司、组织. They are not covered by the application MIT License or the WIKI data license. Text written by WIKI contributors remains subject to the license declared by its source page. The portrait source collection details are in `source-assets/pet-illustrations/README.md`.
