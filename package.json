@@ -1,0 +1,19 @@
+{
+  "name": "ncr-egg-check",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "蛋查查桌面应用",
+  "scripts": {
+    "dev": "mygo dev",
+    "build": "mygo build",
+    "generate": "mygo generate",
+    "dev:web": "npm --prefix ui-draft run dev",
+    "build:web": "npm --prefix ui-draft run build",
+    "release": "node scripts/release.mjs",
+    "release:dry-run": "node scripts/release.mjs --dry-run"
+  },
+  "devDependencies": {
+    "mygo-cli": "0.3.7"
+  }
+}
