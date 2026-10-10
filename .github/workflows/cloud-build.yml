@@ -80,7 +80,7 @@ jobs:
           npm ci --prefix ui-draft
 
       - name: Build app
-        run: npm run build -- -platform windows/${{ matrix.arch }} -o build/cloud
+        run: '& .\node_modules\.bin\mygo.cmd build "-platform" "windows/${{ matrix.arch }}" "-o" "build/cloud"'
 
       - name: Upload Windows installer and portable app
         uses: actions/upload-artifact@v7
