@@ -61,9 +61,15 @@ npm run data:import -- --source /path/to/rocom-wiki-data
 
 构建只打包 `data/pets.json`、前端页面及 `ui-draft/public/` 中使用的素材。`source-assets/` 保存原始素材供后续维护，不会被打进应用。
 
-## Agent 开发资料
+## For agent
 
-面向开发者和 agent 的项目简述与设计语言见 [`devdoc/`](devdoc/)，该目录仅用于开发参考，不会打包进应用。
+开始项目开发前，agent 必须阅读 [`devdoc/`](devdoc/) 下的项目文档，并按 [`devdoc/agent-workflow.md`](devdoc/agent-workflow.md) 执行。代码、数据、界面、许可或开发与发布流程发生变化时，agent 负责同步维护相关文档，确保描述与仓库实现一致。文档专供开发参考，不会打包进应用。
+
+### Agent 开发资料
+
+- [项目简述](devdoc/project-overview.md)
+- [设计语言](devdoc/design-language.md)
+- [文档阅读与维护流程](devdoc/agent-workflow.md)
 
 ## 许可证
 
