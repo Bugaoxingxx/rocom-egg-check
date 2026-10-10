@@ -1,6 +1,6 @@
 {
-  "name": "ncr-egg-check-ui",
-  "version": "1.0.0",
+  "name": "rocom-egg-check-ui",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "scripts": {

@@ -44,6 +44,10 @@ Attribution: 洛克王国世界 WIKI contributors; data compilation by JayeGT002
 
 The application uses the `rocokingdom-ui` npm package (version `0.0.1-beta.0`). Its npm package metadata declares the MIT License and credits Charles Lee. See the [upstream project](https://github.com/rookie-orange/rocokingdom-ui).
 
+## Remix Icon
+
+The title bar uses the `search-line`, `calculator-line`, and `settings-3-line` icons from [Remix Icon](https://remixicon.com/), version 4.9.1. The Remix Icon license permits these icons to be included in applications; attribution is optional. See the [license](https://cdn.jsdelivr.net/npm/remixicon@4.9.1/License).
+
 ## Game materials
 
 The files in `public/pet-portraits/` were collected from the [official game asset page](https://rocom.qq.com/act/a20250719icreate/images.html). Game images, animations, audio, and original game text used in this project are included only to better present game reference material. Their copyrights belong to 魔方工作室群、洛克王国世界项目组及其关联公司、组织. They are not covered by the application MIT License or the WIKI data license. Text written by WIKI contributors remains subject to the license declared by its source page. The portrait source collection details are in `source-assets/pet-illustrations/README.md`.

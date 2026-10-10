@@ -4,6 +4,7 @@ import (
 	"embed"
 	"encoding/json"
 	"log"
+	"runtime"
 	"strings"
 
 	"github.com/egoist/mygo"
@@ -19,6 +20,7 @@ type database struct {
 // EggData serves the independent creature and egg-weight dataset to the UI.
 type EggData struct {
 	pets      []Pet
+	allPets   []Pet
 	eggGroups []string
 }
 
@@ -75,6 +77,7 @@ func NewEggData() (*EggData, error) {
 	service := &EggData{}
 	seenGroups := make(map[string]bool)
 	for _, pet := range source.Pets {
+		service.allPets = append(service.allPets, pet)
 		if pet.Stage != 1 {
 			continue
 		}
@@ -113,6 +116,14 @@ func (data *EggData) Query(filter QueryFilter) []Pet {
 		keyword = strings.Repeat("0", 3-len(keyword)) + keyword
 	}
 	keywordLower := strings.ToLower(keyword)
+	matchingFamilies := make(map[string]struct{})
+	if keyword != "" && !numericKeyword {
+		for _, pet := range data.allPets {
+			if strings.Contains(strings.ToLower(pet.Name), keywordLower) && pet.EvolutionID != "" {
+				matchingFamilies[pet.EvolutionID] = struct{}{}
+			}
+		}
+	}
 	eggGroups := makeSet(filter.EggGroups)
 	attributes := makeSet(filter.Attributes)
 
@@ -126,8 +137,12 @@ func (data *EggData) Query(filter QueryFilter) []Pet {
 				if pet.Number != keyword {
 					continue
 				}
-			} else if !strings.Contains(strings.ToLower(pet.Name), keywordLower) {
-				continue
+			} else {
+				if !strings.Contains(strings.ToLower(pet.Name), keywordLower) {
+					if _, found := matchingFamilies[pet.EvolutionID]; pet.EvolutionID == "" || !found {
+						continue
+					}
+				}
 			}
 		}
 		if len(eggGroups) > 0 && !containsAny(pet.EggGroups, eggGroups) {
@@ -173,15 +188,15 @@ func containsAny(values []string, options map[string]struct{}) bool {
 }
 
 func main() {
-	mygo.App.SetName("NCR Egg Check")
+	mygo.App.SetName("Rocom Egg Check")
 	data, err := NewEggData()
 	if err != nil {
 		log.Fatal(err)
 	}
 	mygo.Bind(data)
 	mygo.App.WhenReady(func() {
-		mygo.NewWindow(mygo.WindowOptions{
-			Title:           "蛋查查 · NCR Egg Check",
+		windowOptions := mygo.WindowOptions{
+			Title:           "蛋查查 · Rocom Egg Check",
 			URL:             "/",
 			Width:           1440,
 			Height:          920,
@@ -189,7 +204,15 @@ func main() {
 			MinHeight:       600,
 			StateKey:        "main",
 			BackgroundColor: "#e7eadb",
-		})
+		}
+		switch runtime.GOOS {
+		case "darwin":
+			windowOptions.TitleBarStyle = mygo.TitleBarHiddenInset
+		case "windows":
+			windowOptions.TitleBarStyle = mygo.TitleBarHidden
+			windowOptions.TitleBarHeight = 48
+		}
+		mygo.NewWindow(windowOptions)
 	})
 	if err := mygo.App.Run(); err != nil {
 		log.Fatal(err)

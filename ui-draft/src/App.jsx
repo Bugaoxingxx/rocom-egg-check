@@ -3,6 +3,8 @@ import { Button, Input, RocoTheme } from 'rocokingdom-ui'
 import { attributeColors, getEggGroupColor, getTierColor } from './colors'
 import petPortraits from './petPortraits.json'
 import { EggData } from './mygo'
+import OffspringCalculator, { SAVED_CALCULATIONS_KEY } from './OffspringCalculator'
+import { version as appVersion } from '../package.json'
 
 async function getEggDataClient() {
   if (typeof window !== 'undefined' && typeof window.mygo?.call === 'function') return EggData
@@ -11,15 +13,19 @@ async function getEggDataClient() {
 }
 
 function SearchIcon() {
-  return <svg aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="10.8" cy="10.8" r="6.6" /><path d="m16 16 4 4" /></svg>
+  return <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="10.8" cy="10.8" r="6.6" /><path d="m16 16 4 4" /></svg>
 }
 
-function SettingsIcon() {
-  return <svg aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" /><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z" transform="translate(1 1) scale(.92)" /></svg>
+function RemixSearchIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z" /></svg>
 }
 
-function BackIcon() {
-  return <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5" /><path d="m12 19-7-7 7-7" /></svg>
+function RemixSettingsIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><path d="M3.33946 17.0002C2.90721 16.2515 2.58277 15.4702 2.36133 14.6741C3.3338 14.1779 3.99972 13.1668 3.99972 12.0002C3.99972 10.8345 3.3348 9.824 2.36353 9.32741C2.81025 7.71651 3.65857 6.21627 4.86474 4.99001C5.7807 5.58416 6.98935 5.65534 7.99972 5.072C9.01009 4.48866 9.55277 3.40635 9.4962 2.31604C11.1613 1.8846 12.8847 1.90004 14.5031 2.31862C14.4475 3.40806 14.9901 4.48912 15.9997 5.072C17.0101 5.65532 18.2187 5.58416 19.1346 4.99007C19.7133 5.57986 20.2277 6.25151 20.66 7.00021C21.0922 7.7489 21.4167 8.53025 21.6381 9.32628C20.6656 9.82247 19.9997 10.8336 19.9997 12.0002C19.9997 13.166 20.6646 14.1764 21.6359 14.673C21.1892 16.2839 20.3409 17.7841 19.1347 19.0104C18.2187 18.4163 17.0101 18.3451 15.9997 18.9284C14.9893 19.5117 14.4467 20.5941 14.5032 21.6844C12.8382 22.1158 11.1148 22.1004 9.49633 21.6818C9.55191 20.5923 9.00925 19.5113 7.99972 18.9284C6.98938 18.3451 5.78073 18.4163 4.86484 19.0103C4.28617 18.4205 3.77172 17.7489 3.33946 17.0002ZM8.99972 17.1964C10.0911 17.8265 10.8749 18.8227 11.2503 19.9659C11.7486 20.0133 12.2502 20.0133 12.7486 19.9675C13.1239 18.8237 13.9076 17.8268 14.9997 17.1964C16.0911 16.5663 17.3468 16.3857 18.5252 16.6324C18.8145 16.224 19.0647 15.7891 19.2728 15.3339C18.4705 14.4372 17.9997 13.2604 17.9997 12.0002C17.9997 10.74 18.4706 9.5632 19.2729 8.6665C19.1688 8.4405 19.0528 8.21443 18.9269 7.99641C18.801 7.77839 18.666 7.56768 18.5223 7.36462C17.3447 7.61096 16.09 7.4314 14.9997 6.80405C13.9083 6.17395 13.1246 5.17768 12.7491 4.03455C12.2509 3.98714 11.7492 3.98646 11.2509 4.03292C10.8756 5.17671 10.0919 6.17364 8.99972 6.80405C7.90838 7.43447 6.65377 7.61494 5.47559 7.36803C5.1863 7.77641 4.93609 8.21127 4.72802 8.66647C5.53028 9.56318 5.99972 10.74 5.99972 12.0002C5.99972 13.2604 5.52883 14.4372 4.72656 15.3339C4.83067 15.5599 4.94661 15.7859 5.07249 16.0039C5.19836 16.2219 5.33337 16.4326 5.47709 16.6357C6.65474 16.3894 7.90838 16.5663 8.99972 17.1964ZM11.9997 15.0002C10.3429 15.0002 8.99972 13.6571 8.99972 12.0002C8.99972 10.3434 10.3429 9.00021 11.9997 9.00021C13.6566 9.00021 14.9997 10.3434 14.9997 12.0002C14.9997 13.6571 13.6566 15.0002 11.9997 15.0002ZM11.9997 13.0002C12.552 13.0002 12.9997 12.5525 12.9997 12.0002C12.9997 11.4479 12.552 11.0002 11.9997 11.0002C11.4474 11.0002 10.9997 11.4479 10.9997 12.0002C10.9997 12.5525 11.4474 13.0002 11.9997 13.0002Z" /></svg>
+}
+
+function RemixCalculatorIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><path d="M4 2H20C20.5523 2 21 2.44772 21 3V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V3C3 2.44772 3.44772 2 4 2ZM5 4V20H19V4H5ZM7 6H17V10H7V6ZM7 12H9V14H7V12ZM7 16H9V18H7V16ZM11 12H13V14H11V12ZM11 16H13V18H11V16ZM15 12H17V18H15V12Z" /></svg>
 }
 
 function readPreference(key, fallback) {
@@ -38,25 +44,39 @@ function savePreference(key, value) {
   }
 }
 
-function SettingsPanel({ section, onSectionChange, onBack, uiScale, savedUiScale, onUiScaleChange, onUiScaleSave, forceSystemFont, onForceSystemFontChange }) {
+function GlobalToast({ toast }) {
+  return (
+    <div className="app-toast-region" aria-live="polite" aria-atomic="true">
+      {toast && (
+        <div className="app-toast" key={toast.id} role="status">
+          <span className="app-toast-icon" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m4 10 4 4 8-8" /></svg></span>
+          <span>{toast.message}</span>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function SettingsPanel({ section, onSectionChange, uiScale, savedUiScale, onUiScaleChange, onUiScaleSave, forceSystemFont, onForceSystemFontChange, onImportUserData, onExportUserData }) {
+  const importFileInput = useRef(null)
+
   return (
     <div className="settings-shell">
       <aside className="settings-sidebar">
         <div className="settings-sidebar-heading">
           <div className="settings-sidebar-title-row">
-            <button className="settings-back-button" onClick={onBack} aria-label="返回查询"><BackIcon /></button>
             <span>设置</span>
           </div>
-          <p>管理蛋查查的使用偏好</p>
         </div>
         <nav className="settings-navigation" aria-label="设置分类">
           <button className={section === 'general' ? 'settings-nav-item active' : 'settings-nav-item'} onClick={() => onSectionChange('general')} aria-current={section === 'general' ? 'page' : undefined}>通用</button>
+          <button className={section === 'import-export' ? 'settings-nav-item active' : 'settings-nav-item'} onClick={() => onSectionChange('import-export')} aria-current={section === 'import-export' ? 'page' : undefined}>导入导出</button>
           <button className="settings-nav-item disabled" disabled><span>AI设置</span><small>建设中</small></button>
           <button className={section === 'about' ? 'settings-nav-item active' : 'settings-nav-item'} onClick={() => onSectionChange('about')} aria-current={section === 'about' ? 'page' : undefined}>关于</button>
         </nav>
       </aside>
 
-      <main className="settings-main">
+      <main className={section === 'about' ? 'settings-main settings-main-about' : 'settings-main'}>
         {section === 'general' ? (
           <>
             <header className="settings-page-heading">
@@ -92,11 +112,60 @@ function SettingsPanel({ section, onSectionChange, onBack, uiScale, savedUiScale
               </label>
             </div>
           </>
+        ) : section === 'import-export' ? (
+          <>
+            <header className="settings-page-heading">
+              <span>用户数据</span>
+              <h1>导入导出</h1>
+              <p>管理应用中保存的用户数据。</p>
+            </header>
+            <div className="settings-options">
+              <section className="settings-option settings-transfer-option">
+                <div className="settings-option-copy">
+                  <h2>子代计算器数据</h2>
+                  <p>导入本应用导出的 JSON 备份并合并记录；相同 ID 的记录将使用备份内容更新。也可导出所有计算记录。</p>
+                </div>
+                <input
+                  ref={importFileInput}
+                  className="settings-import-input"
+                  type="file"
+                  accept=".json,application/json"
+                  aria-label="选择要导入的用户数据文件"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0]
+                    if (file) onImportUserData(file)
+                    event.target.value = ''
+                  }}
+                />
+                <div className="settings-transfer-actions">
+                  <Button className="settings-transfer-button" material="default" shadow onClick={() => importFileInput.current?.click()}>导入数据</Button>
+                  <Button className="settings-transfer-button" material="default" shadow onClick={onExportUserData}>导出数据</Button>
+                </div>
+              </section>
+            </div>
+          </>
         ) : (
-          <section className="settings-about">
-            <img src="/empty-placeholder.png" alt="蛋查查图标" />
-            <h1>蛋查查</h1>
-            <p className="settings-about-english">NCR Egg Check</p>
+          <section className="settings-about-page">
+            <header className="settings-about-hero">
+              <div className="settings-about-brand">
+                <div className="settings-about-icon-wrap">
+                  <img src="/app-icon.png" alt="蛋查查图标" draggable={false} />
+                </div>
+                <div className="settings-about-brand-copy">
+                  <h1>蛋查查</h1>
+                  <p className="settings-about-english">Rocom Egg Check</p>
+                </div>
+              </div>
+              <div className="settings-about-hero-bottom">
+                <span className="settings-about-version">版本 {appVersion}</span>
+              </div>
+              <span className="settings-about-orbit settings-about-orbit-one" aria-hidden="true" />
+              <span className="settings-about-orbit settings-about-orbit-two" aria-hidden="true" />
+            </header>
+            <a className="settings-about-github" href="https://github.com/JayeGT002/rocom-egg-check" target="_blank" rel="noreferrer">
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="currentColor"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.14.68-3.8-1.33-3.8-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.03-.7.08-.68.08-.68 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.66 1.23 3.31.94.1-.73.4-1.23.72-1.51-2.5-.28-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.17-3.02-.12-.29-.51-1.43.11-2.98 0 0 .95-.3 3.1 1.15a10.8 10.8 0 0 1 5.64 0c2.15-1.45 3.1-1.15 3.1-1.15.62 1.55.23 2.69.11 2.98.73.79 1.17 1.79 1.17 3.02 0 4.33-2.64 5.28-5.15 5.56.41.35.77 1.03.77 2.08v3.09c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z" /></svg>
+              <span>GitHub 项目</span>
+            </a>
           </section>
         )}
       </main>
@@ -161,19 +230,25 @@ function EggWeightScale({ weight }) {
 }
 
 function App() {
-  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [toast, setToast] = useState(null)
+  const toastSequence = useRef(0)
+  const [activePage, setActivePage] = useState('query')
   const [settingsSection, setSettingsSection] = useState('general')
   const [uiScale, setUiScale] = useState(() => {
-    const stored = Number(readPreference('ncr-egg-check.ui-scale', '100'))
+    const stored = Number(readPreference('rocom-egg-check.ui-scale', '100'))
     return Number.isFinite(stored) && stored >= 80 && stored <= 120 ? stored : 100
   })
   const [uiScaleDraft, setUiScaleDraft] = useState(uiScale)
-  const [forceSystemFont, setForceSystemFont] = useState(() => readPreference('ncr-egg-check.system-font', 'false') === 'true')
+  const [forceSystemFont, setForceSystemFont] = useState(() => readPreference('rocom-egg-check.system-font', 'false') === 'true')
   const [keyword, setKeyword] = useState('')
   const [minTier, setMinTier] = useState(1)
   const [maxTier, setMaxTier] = useState(10)
   const [groups, setGroups] = useState([])
   const [selectedAttributes, setSelectedAttributes] = useState([])
+  const hasImmersiveTitleBar = typeof window === 'undefined'
+    || !window.mygo
+    || window.mygo.platform === 'darwin'
+    || window.mygo.platform === 'win32'
   const [eggGroups, setEggGroups] = useState([])
   const [eggDataClient, setEggDataClient] = useState(null)
   const [results, setResults] = useState([])
@@ -183,6 +258,15 @@ function App() {
   const cancelTierRangeBlur = useRef(false)
   const hasTierFilter = minTier > 1 || maxTier < 10
   const hasFilters = Boolean(keyword.trim() || hasTierFilter || groups.length || selectedAttributes.length)
+  const notify = (message) => setToast({ id: ++toastSequence.current, message })
+
+  useEffect(() => {
+    if (!toast) return undefined
+    const timeout = window.setTimeout(() => {
+      setToast((current) => current?.id === toast.id ? null : current)
+    }, 2700)
+    return () => window.clearTimeout(timeout)
+  }, [toast])
 
   useEffect(() => {
     let cancelled = false
@@ -299,30 +383,109 @@ function App() {
 
   function saveUiScale() {
     setUiScale(uiScaleDraft)
-    savePreference('ncr-egg-check.ui-scale', String(uiScaleDraft))
+    savePreference('rocom-egg-check.ui-scale', String(uiScaleDraft))
+  }
+
+  function exportUserData() {
+    try {
+      const saved = window.localStorage.getItem(SAVED_CALCULATIONS_KEY)
+      const offspringCalculations = saved ? JSON.parse(saved) : []
+      if (!Array.isArray(offspringCalculations)) throw new Error('计算记录格式无效')
+
+      const exportedAt = new Date()
+      const exportFile = {
+        format: 'rocom-egg-check-user-data',
+        version: 1,
+        exportedAt: exportedAt.toISOString(),
+        data: { offspringCalculations },
+      }
+      const blob = new Blob([JSON.stringify(exportFile, null, 2)], { type: 'application/json;charset=utf-8' })
+      const downloadUrl = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      const date = [exportedAt.getFullYear(), String(exportedAt.getMonth() + 1).padStart(2, '0'), String(exportedAt.getDate()).padStart(2, '0')].join('-')
+      link.href = downloadUrl
+      link.download = `rocom-egg-check-data-${date}.json`
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000)
+      notify(`已导出 ${offspringCalculations.length} 条子代计算记录`)
+    } catch (error) {
+      console.error('用户数据导出失败', error)
+      notify('导出失败，无法读取子代计算记录')
+    }
+  }
+
+  async function importUserData(file) {
+    try {
+      const importFile = JSON.parse(await file.text())
+      const incomingRecords = importFile?.data?.offspringCalculations
+      if (importFile?.format !== 'rocom-egg-check-user-data' || importFile.version !== 1 || !Array.isArray(incomingRecords)) {
+        throw new Error('导入文件格式无效或版本不受支持')
+      }
+
+      const incomingIds = new Set()
+      for (const record of incomingRecords) {
+        if (!record || typeof record !== 'object' || Array.isArray(record) || typeof record.id !== 'string' || !record.id.trim() || typeof record.name !== 'string') {
+          throw new Error('计算记录内容无效')
+        }
+        if (incomingIds.has(record.id)) throw new Error('导入文件包含重复的记录 ID')
+        incomingIds.add(record.id)
+      }
+
+      const stored = window.localStorage.getItem(SAVED_CALCULATIONS_KEY)
+      const currentRecords = stored ? JSON.parse(stored) : []
+      if (!Array.isArray(currentRecords)) throw new Error('当前计算记录格式无效')
+      const currentIds = new Set(currentRecords.map((record) => record?.id).filter((id) => typeof id === 'string'))
+      const newCount = incomingRecords.filter((record) => !currentIds.has(record.id)).length
+      const importedIds = new Set(incomingRecords.map((record) => record.id))
+      const mergedRecords = [
+        ...incomingRecords,
+        ...currentRecords.filter((record) => !importedIds.has(record?.id)),
+      ]
+
+      window.localStorage.setItem(SAVED_CALCULATIONS_KEY, JSON.stringify(mergedRecords))
+      window.dispatchEvent(new CustomEvent('rocom-egg-check:offspring-calculations-imported', { detail: mergedRecords }))
+      notify(`导入完成：新增 ${newCount} 条，更新 ${incomingRecords.length - newCount} 条`)
+    } catch (error) {
+      console.error('用户数据导入失败', error)
+      notify(error instanceof SyntaxError ? '导入失败：JSON 文件无法解析' : `导入失败：${error.message || '文件无效'}`)
+    }
   }
 
   function changeSystemFont(event) {
     const enabled = event.target.checked
     setForceSystemFont(enabled)
-    savePreference('ncr-egg-check.system-font', String(enabled))
+    savePreference('rocom-egg-check.system-font', String(enabled))
   }
 
   return (
     <RocoTheme className="app-theme">
-      <div className={`scaled-app${forceSystemFont ? ' force-system-font' : ''}`} style={{ zoom: uiScale / 100, width: `${10000 / uiScale}%`, '--app-scale': uiScale / 100, '--app-viewport-height': `${10000 / uiScale}vh` }}>
-        {settingsOpen ? (
+      <div className={`scaled-app${forceSystemFont ? ' force-system-font' : ''}${hasImmersiveTitleBar ? ' has-immersive-titlebar' : ''}`} style={{ zoom: uiScale / 100, width: `${10000 / uiScale}%`, '--app-scale': uiScale / 100, '--app-viewport-height': `${10000 / uiScale}vh` }}>
+        {hasImmersiveTitleBar && (
+          <header className="app-titlebar">
+            <nav className="app-titlebar-nav" aria-label="功能切换">
+              <button type="button" className={activePage === 'query' ? 'app-titlebar-tab active' : 'app-titlebar-tab'} onClick={() => setActivePage('query')} aria-current={activePage === 'query' ? 'page' : undefined}><RemixSearchIcon />精灵蛋尺寸</button>
+              <button type="button" className={activePage === 'calculator' ? 'app-titlebar-tab active' : 'app-titlebar-tab'} onClick={() => setActivePage('calculator')} aria-current={activePage === 'calculator' ? 'page' : undefined}><RemixCalculatorIcon />子代计算器</button>
+              <button type="button" className={activePage === 'settings' ? 'app-titlebar-tab active' : 'app-titlebar-tab'} onClick={() => setActivePage('settings')} aria-current={activePage === 'settings' ? 'page' : undefined}><RemixSettingsIcon />设置</button>
+            </nav>
+          </header>
+        )}
+        {activePage === 'settings' ? (
           <SettingsPanel
             section={settingsSection}
             onSectionChange={setSettingsSection}
-            onBack={() => setSettingsOpen(false)}
             uiScale={uiScaleDraft}
             savedUiScale={uiScale}
             onUiScaleChange={changeUiScale}
             onUiScaleSave={saveUiScale}
             forceSystemFont={forceSystemFont}
             onForceSystemFontChange={changeSystemFont}
+            onImportUserData={importUserData}
+            onExportUserData={exportUserData}
           />
+        ) : activePage === 'calculator' ? (
+          <OffspringCalculator notify={notify} />
         ) : <div className="app-shell">
         <aside className="filters-sidebar">
           <section className="filter-section search-section">
@@ -443,17 +606,16 @@ function App() {
                   }}
                   aria-pressed={selected}
                   onClick={() => toggleAttribute(attribute)}
-                ><img src={`/attributes/${encodeURIComponent(attribute)}.webp`} alt="" />{attribute}</Button>
+                ><img src={`/attributes/${encodeURIComponent(attribute)}.webp`} alt="" draggable={false} />{attribute}</Button>
               })}
             </div>
           </section>
-          <Button className="sidebar-settings-button" material="paper" variant="solid" size="large" style={{ '--rk-material-background': 'var(--rk-primary)', '--rk-material-color': 'var(--rk-on-primary)' }} onClick={() => setSettingsOpen(true)}><SettingsIcon />设置</Button>
         </aside>
 
         <main className="results-main">
           {!hasFilters ? (
             <div className="initial-empty">
-              <img src="/empty-placeholder.png" alt="等待筛选条件的占位图" />
+              <img src="/empty-placeholder.png" alt="等待筛选条件的占位图" draggable={false} />
               <h2>选择筛选条件开始查询</h2>
               <p>从左侧输入名称，或调整档位、蛋组和属性。</p>
             </div>
@@ -471,12 +633,12 @@ function App() {
                     return <article className="pet-card" role="listitem" key={pet.id}>
                       <header className="pet-card-header">
                         <div className="pet-card-identity">
-                          {petPortraits[pet.id] && <img className="pet-avatar" src={petPortraits[pet.id]} alt="" loading="lazy" decoding="async" />}
+                          {petPortraits[pet.id] && <img className="pet-avatar" src={petPortraits[pet.id]} alt="" loading="lazy" decoding="async" draggable={false} />}
                           <div className="pet-name">
                             <span className="pet-number">NO. {pet.number}</span>
                             <strong>{pet.name}</strong>
                             <div className="pet-attributes">
-                              {petAttributes.map((attribute) => <span className="pet-attribute" key={`attribute-${attribute}`} style={{ '--attribute-color': attributeColors[attribute] ?? '#666666' }}><span className="pet-attribute-content"><img src={`/attributes/${encodeURIComponent(attribute)}.webp`} alt="" />{attribute}</span></span>)}
+                              {petAttributes.map((attribute) => <span className="pet-attribute" key={`attribute-${attribute}`} style={{ '--attribute-color': attributeColors[attribute] ?? '#666666' }}><span className="pet-attribute-content"><img src={`/attributes/${encodeURIComponent(attribute)}.webp`} alt="" draggable={false} />{attribute}</span></span>)}
                             </div>
                           </div>
                         </div>
@@ -490,13 +652,14 @@ function App() {
                   })}
                 </div>
               ) : (
-                <div className="no-results"><img src="/empty-placeholder.png" alt="没有匹配结果" /><strong>没有找到匹配精灵</strong><span>试试放宽档位范围或减少筛选条件。</span></div>
+                <div className="no-results"><img src="/empty-placeholder.png" alt="没有匹配结果" draggable={false} /><strong>没有找到匹配精灵</strong><span>试试放宽档位范围或减少筛选条件。</span></div>
               )}
             </>
           )}
         </main>
         </div>}
       </div>
+      <GlobalToast toast={toast} />
     </RocoTheme>
   )
 }

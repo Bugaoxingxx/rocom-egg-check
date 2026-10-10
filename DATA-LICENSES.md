@@ -15,3 +15,5 @@ The [rocom WIKI homepage](https://wiki.biligame.com/rocom/%E9%A6%96%E9%A1%B5) st
 ## Game materials and third-party material
 
 Game images, animations, audio, and original game text included in this project are used only to better present game reference material. Their copyrights belong to 魔方工作室群、洛克王国世界项目组及其关联公司、组织. They are not covered by the root MIT License or the WIKI data license. Text written by WIKI contributors remains subject to the license declared by its source page. Other third-party components, color mappings, and icons are listed in [`ui-draft/THIRD-PARTY-NOTICES.md`](ui-draft/THIRD-PARTY-NOTICES.md).
+
+The portraits for 不咕钟 and 森豆丁 were retrieved from the 洛克王国世界 BWIKI file pages ([不咕钟 portrait](https://wiki.biligame.com/nrc/index.php?title=%E6%96%87%E4%BB%B6%3APetPortrait_buguzhong.png), [森豆丁 portrait](https://wiki.biligame.com/nrc/index.php?title=%E6%96%87%E4%BB%B6%3APetPortrait_sendouding.png)) through the MediaWiki API and converted from 1024 × 1024 PNG to WebP at quality 95. BWIKI hosts these game assets; it does not change their copyright status, and they remain outside the MIT and Wiki data licenses.

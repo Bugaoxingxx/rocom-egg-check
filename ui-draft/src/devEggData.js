@@ -1,5 +1,6 @@
 import sourceData from '../../data/pets.json'
 
+const allPets = sourceData.pets
 const initialForms = sourceData.pets.filter((pet) => pet.stage === 1)
 const eggGroups = [...new Set(initialForms.flatMap((pet) => pet.egg_groups ?? []))]
 
@@ -9,6 +10,14 @@ function matchesAny(values, selected) {
 
 function isNumber(value) {
   return /^\d+$/.test(value)
+}
+
+function matchingEvolutionIds(keyword) {
+  const normalizedKeyword = keyword.toLocaleLowerCase()
+  return new Set(allPets
+    .filter((pet) => pet.name.toLocaleLowerCase().includes(normalizedKeyword))
+    .map((pet) => pet.evolution_id)
+    .filter(Boolean))
 }
 
 export const DevEggData = {
@@ -22,12 +31,18 @@ export const DevEggData = {
     if (numericKeyword && keyword.length < 3) keyword = keyword.padStart(3, '0')
     const minTier = Math.max(1, filter.minTier || 1)
     const maxTier = Math.min(10, filter.maxTier || 10)
+    const matchingFamilies = keyword && !numericKeyword ? matchingEvolutionIds(keyword) : null
 
     return initialForms.filter((pet) => {
       const tier = pet.egg_weight.tier
       if (tier < minTier || tier > maxTier) return false
       if (keyword) {
-        if (numericKeyword ? pet.number !== keyword : !pet.name.toLocaleLowerCase().includes(keyword.toLocaleLowerCase())) return false
+        if (numericKeyword) {
+          if (pet.number !== keyword) return false
+        } else {
+          const directMatch = pet.name.toLocaleLowerCase().includes(keyword.toLocaleLowerCase())
+          if (!directMatch && (!pet.evolution_id || !matchingFamilies.has(pet.evolution_id))) return false
+        }
       }
       if (!matchesAny(pet.egg_groups ?? [], filter.eggGroups ?? [])) return false
       if (!matchesAny(pet.attributes ?? [], filter.attributes ?? [])) return false

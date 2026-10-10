@@ -1,4 +1,4 @@
-module ncr-egg-check
+module rocom-egg-check
 
 go 1.27.1
 

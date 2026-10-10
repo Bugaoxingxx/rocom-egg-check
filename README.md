@@ -1,4 +1,4 @@
-# 蛋查查 · NCR Egg Check
+# 蛋查查 · Rocom Egg Check
 
 基于 MyGo、Go 与 WebView 的精灵蛋范围查询桌面应用。筛选数据保存在独立的 [`data/pets.json`](data/pets.json) 中，并在构建时嵌入 Go 应用；正式运行时由 Go 提供蛋组列表和精灵查询。
 
