@@ -47,6 +47,10 @@ UI 使用 [Roco Kingdom UI](https://github.com/rookie-orange/rocokingdom-ui)。�
 
 构建只打包 `data/pets.json`、前端页面及 `ui-draft/public/` 中使用的素材。`source-assets/` 保存原始素材供后续维护，不会被打进应用。
 
+## Agent 开发资料
+
+面向开发者和 agent 的项目简述与设计语言见 [`devdoc/`](devdoc/)，该目录仅用于开发参考，不会打包进应用。
+
 ## 许可证
 
 本项目原创应用代码采用 MIT 许可证，见 [`LICENSE`](LICENSE)。Wiki 衍生数据、游戏图片和第三方组件不随代码一并改为 MIT；各自来源、署名和许可范围见 [`DATA-LICENSES.md`](DATA-LICENSES.md) 与 [`ui-draft/THIRD-PARTY-NOTICES.md`](ui-draft/THIRD-PARTY-NOTICES.md)。
