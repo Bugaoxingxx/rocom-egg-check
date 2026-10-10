@@ -2,6 +2,20 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.3] - 2026-10-10
+
+### Fixed
+
+- Replace the full-body artwork for 不咕钟 and 森豆丁 with their correct 128 × 128 avatar assets from the upstream catalog.
+
+### Changed
+
+- Rebuild pet records from `rocom-wiki-data`'s `Catalog.lua` and add a reproducible importer for future catalog updates.
+
+### Distribution
+
+- Add manually triggered cloud builds for macOS arm64/x64 and Windows x64/arm64; pushes and tags do not start builds automatically.
+
 ## [1.1.2] - 2026-10-10
 
 ### Fixed

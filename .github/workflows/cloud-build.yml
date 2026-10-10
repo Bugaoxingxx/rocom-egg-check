@@ -1,0 +1,92 @@
+name: Cloud build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  macos:
+    name: macOS (${{ matrix.label }})
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            label: arm64
+          - arch: amd64
+            label: x64
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.12
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix ui-draft
+
+      - name: Build app
+        run: npm run build -- -platform darwin/${{ matrix.arch }} -sign=- -o build/cloud
+
+      - name: Upload app bundle and disk image
+        uses: actions/upload-artifact@v7
+        with:
+          name: Rocom-Egg-Check-macOS-${{ matrix.label }}
+          path: build/cloud/darwin-${{ matrix.arch }}/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
+
+  windows:
+    name: Windows (${{ matrix.label }})
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            label: x64
+          - arch: arm64
+            label: arm64
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.12
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix ui-draft
+
+      - name: Build app
+        run: npm run build -- -platform windows/${{ matrix.arch }} -o build/cloud
+
+      - name: Upload Windows installer and portable app
+        uses: actions/upload-artifact@v7
+        with:
+          name: Rocom-Egg-Check-Windows-${{ matrix.label }}
+          path: build/cloud/windows-${{ matrix.arch }}/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0

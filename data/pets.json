@@ -19416,7 +19416,7 @@
   "metadata": {
     "total_pets": 578,
     "total_chains": 255,
-    "tier_definition": "一档:1-10g, 二档:11-20g, 三档:21-30g, 以此类推",
+    "tier_definition": "界面难度档位 1–10 按 total_range 分桶；阈值取原有相邻档位范围的中点。",
     "egg_groups": [
       "巨灵组",
       "两栖组",
@@ -19431,12 +19431,18 @@
       "魔力组",
       "海洋组",
       "飞龙组",
-      "机械组",
-      "无法孵蛋"
+      "机械组"
     ],
-    "mapping_method": "位置相关双映射表(基于15个已知样本验证)",
+    "mapping_method": "蛋重边界直接来自 Catalog.lua egg_size；间隔、区间计数与界面难度档位由转换脚本派生。",
     "note": "重量单位为克(g),显示时除以1000转换为kg,保留3位小数",
-    "attribute_source": "Rocom Wiki Data published dataset; WIKI attributes matched by Pokédex number and title, then normalized by removing the 系 suffix.",
-    "attribute_license": "CC BY-SA 4.0"
+    "source": {
+      "repository": "https://github.com/JayeGT002/rocom-wiki-data",
+      "commit": "6ab264cb98eec1dd2dde0d7c6dfa200733a98d63",
+      "catalog": "data/wiki_modules/Pets/data/Catalog.lua",
+      "catalog_sha256": "e56a2f4aeceb5ca10aa3a25d27d50007b771403e8e873751fa7d17b8a8a35683",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "attribute_normalization": "从上游 types 字段复制，移除末尾的“系”。"
   }
 }
