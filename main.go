@@ -195,14 +195,23 @@ func main() {
 	}
 	mygo.Bind(data)
 	mygo.App.WhenReady(func() {
+		windowWidth, windowHeight := 1280, 820
+		minWidth, minHeight := 720, 600
+		if workArea := mygo.Screen.PrimaryDisplay().WorkArea; workArea.Width > 0 && workArea.Height > 0 {
+			windowWidth = min(windowWidth, max(360, workArea.Width-80))
+			windowHeight = min(windowHeight, max(500, workArea.Height-80))
+			minWidth = min(minWidth, windowWidth)
+			minHeight = min(minHeight, windowHeight)
+		}
 		windowOptions := mygo.WindowOptions{
-			Title:           "蛋查查 · Rocom Egg Check",
-			URL:             "/",
-			Width:           1440,
-			Height:          920,
-			MinWidth:        720,
-			MinHeight:       600,
-			StateKey:        "main",
+			Title:     "蛋查查 · Rocom Egg Check",
+			URL:       "/",
+			Width:     windowWidth,
+			Height:    windowHeight,
+			MinWidth:  minWidth,
+			MinHeight: minHeight,
+			// Reset older saved bounds that could extend beyond the current display.
+			StateKey:        "main-viewport-fit",
 			BackgroundColor: "#e7eadb",
 		}
 		switch runtime.GOOS {

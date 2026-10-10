@@ -461,7 +461,7 @@ function App() {
 
   return (
     <RocoTheme className="app-theme">
-      <div className={`scaled-app${forceSystemFont ? ' force-system-font' : ''}${hasImmersiveTitleBar ? ' has-immersive-titlebar' : ''}`} style={{ zoom: uiScale / 100, width: `${10000 / uiScale}%`, '--app-scale': uiScale / 100, '--app-viewport-height': `${10000 / uiScale}vh` }}>
+      <div className={`scaled-app${forceSystemFont ? ' force-system-font' : ''}${hasImmersiveTitleBar ? ' has-immersive-titlebar' : ''}`} style={{ zoom: uiScale / 100, width: '100%', '--app-scale': uiScale / 100, '--app-viewport-height': `${10000 / uiScale}vh` }}>
         {hasImmersiveTitleBar && (
           <header className="app-titlebar">
             <nav className="app-titlebar-nav" aria-label="功能切换">

@@ -8,10 +8,10 @@
 }
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 360px; min-height: 100vh; background: var(--rk-paper); }
-html, body { overflow-x: clip; }
+html, body, #root { height: 100%; overflow-x: clip; overscroll-behavior: none; }
 button, input { font: inherit; }
 img { -webkit-user-drag: none; user-select: none; }
-.app-theme { min-height: 100vh; }
+.app-theme { height: 100%; min-height: 0; overflow: hidden; }
 .app-toast-region { position: fixed; top: calc(var(--mygo-titlebar-height, 0px) + 14px); right: max(18px, env(safe-area-inset-right)); z-index: 5000; display: flex; justify-content: flex-end; width: min(440px, calc(100vw - 36px)); pointer-events: none; }
 .app-toast { min-height: 46px; display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px 10px 12px; border: 1px solid color-mix(in srgb, var(--rk-primary-strong) 48%, var(--rk-paper-strong)); border-radius: 14px; color: var(--rk-on-paper); background: var(--rk-paper-soft); box-shadow: 0 8px 28px var(--rk-shadow-color); font-size: 15px; font-weight: 600; line-height: 1.4; animation: app-toast-in .18s ease-out both; }
 .app-toast-icon { width: 25px; height: 25px; flex: 0 0 25px; display: grid; place-items: center; border-radius: 50%; color: var(--rk-on-primary); background: var(--rk-primary); }
@@ -189,6 +189,7 @@ img { -webkit-user-drag: none; user-select: none; }
   position: sticky;
   top: var(--app-titlebar-height);
   overflow-y: auto;
+  overscroll-behavior-y: contain;
   display: flex;
   flex-direction: column;
   padding: 25px 20px 20px 14px;
@@ -254,7 +255,7 @@ img { -webkit-user-drag: none; user-select: none; }
 .offspring-calc-view-tab.rk-button.active,
 .offspring-calc-view-tab.rk-button.active:hover { border-color: var(--rk-primary-strong); color: var(--rk-on-primary); background: var(--rk-primary); font-weight: 700; }
 .offspring-calc-view-tab.rk-button:focus-visible { outline: 2px solid var(--rk-primary-strong); outline-offset: 2px; }
-.offspring-calc-list-count { color: color-mix(in srgb, var(--rk-on-paper) 62%, transparent); font-size: 14px; }
+.offspring-calc-list-count { flex: 0 0 auto; color: color-mix(in srgb, var(--rk-on-paper) 62%, transparent); font-size: 14px; white-space: nowrap; }
 .offspring-calc-saved-list { display: flex; flex-direction: column; gap: 16px; }
 .offspring-calc-saved-cards { display: flex; flex-direction: column; gap: 12px; }
 .offspring-calc-saved-card { min-width: 0; border: 1px solid color-mix(in srgb, var(--rk-on-paper) 13%, transparent); border-radius: var(--rk-radius); box-shadow: 0 2px 8px var(--rk-shadow-soft-color); }
@@ -297,28 +298,36 @@ img { -webkit-user-drag: none; user-select: none; }
 .offspring-calc-row-input.rk-input { width: 128px; min-width: 128px; }
 .offspring-calc-row-input-control { min-height: 30px; padding-inline: 8px; font-size: 13px; font-variant-numeric: tabular-nums; }
 
-.scaled-app { min-height: var(--app-viewport-height, 100vh); background: var(--rk-paper); }
+.scaled-app { height: var(--app-viewport-height, 100vh); min-height: 0; overflow: hidden; background: var(--rk-paper); overscroll-behavior: none; }
 .force-system-font,
 .force-system-font * { font-family: system-ui, 'Microsoft YaHei', sans-serif !important; }
-.app-shell { min-height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height)); }
+.app-shell { height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height)); min-height: 0; flex: 1 1 auto; overflow: hidden; }
+.offspring-calc-shell { height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height)); min-height: 0; overflow: hidden; }
+.offspring-calc-main { height: 100%; min-height: 0; overflow-y: auto; overscroll-behavior-y: contain; }
 .filters-sidebar {
   height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height));
   min-height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height));
   top: var(--app-titlebar-height);
+  overscroll-behavior-y: contain;
 }
-.results-main { min-height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height)); }
+.results-main { height: 100%; min-height: 0; overflow-y: auto; overscroll-behavior-y: contain; }
 .initial-empty { min-height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height) - 56px); }
 
 .settings-shell {
-  min-height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height));
+  height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height));
+  min-height: 0;
+  overflow: hidden;
   display: grid;
+  grid-template-rows: minmax(0, 1fr);
   grid-template-columns: var(--filter-sidebar-width) minmax(0, 1fr);
   background: var(--rk-paper);
 }
 .settings-sidebar {
   width: var(--filter-sidebar-width);
   min-width: 0;
-  height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height));
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
   position: sticky;
   top: var(--app-titlebar-height);
   align-self: start;
@@ -346,12 +355,13 @@ img { -webkit-user-drag: none; user-select: none; }
   text-align: left;
   cursor: pointer;
 }
-.settings-nav-item:hover:not(:disabled) { background: color-mix(in srgb, var(--rk-on-stone) 8%, transparent); }
+.settings-nav-item:hover:not(:disabled):not(.active) { background: color-mix(in srgb, var(--rk-on-stone) 8%, transparent); }
 .settings-nav-item.active { color: var(--rk-on-primary); background: var(--rk-primary); font-weight: 700; }
+.settings-nav-item.active:hover:not(:disabled) { background: var(--rk-primary-strong); }
 .settings-nav-item:focus-visible { outline: 2px solid var(--rk-primary-strong); outline-offset: 2px; }
 .settings-nav-item.disabled { color: color-mix(in srgb, var(--rk-on-stone) 44%, transparent); cursor: not-allowed; }
 .settings-nav-item small { padding: 3px 6px; border-radius: 999px; color: color-mix(in srgb, var(--rk-on-stone) 66%, transparent); background: color-mix(in srgb, var(--rk-on-stone) 9%, transparent); font-size: 13px; }
-.settings-main { min-width: 0; padding: 42px clamp(24px, 5vw, 72px); }
+.settings-main { height: 100%; min-width: 0; min-height: 0; overflow-y: auto; overscroll-behavior-y: contain; padding: 42px clamp(24px, 5vw, 72px); }
 .settings-page-heading { padding-bottom: 23px; border-bottom: 1px solid color-mix(in srgb, var(--rk-on-paper) 14%, transparent); }
 .settings-page-heading > span { color: color-mix(in srgb, var(--rk-on-paper) 52%, transparent); font-size: 14px; letter-spacing: .06em; }
 .settings-page-heading h1 { margin: 7px 0 5px; color: var(--rk-on-paper); font-size: 27px; line-height: 1.25; }
@@ -412,6 +422,11 @@ img { -webkit-user-drag: none; user-select: none; }
   .offspring-calc-main { padding: 20px 14px; }
 }
 @media (max-width: 570px) {
+  html, body, #root { height: auto; min-height: 100%; overflow-y: auto; }
+  .app-theme { height: auto; min-height: 100vh; overflow: visible; }
+  .scaled-app { height: auto; min-height: var(--app-viewport-height, 100vh); overflow: visible; }
+  .app-shell, .offspring-calc-shell, .settings-shell { height: auto; min-height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height)); overflow: visible; }
+  .results-main, .offspring-calc-main, .settings-main { height: auto; min-height: calc(var(--app-viewport-height, 100vh) - var(--app-titlebar-height)); overflow: visible; }
   .app-titlebar-nav { gap: 1px; padding: 2px; }
   .app-titlebar-tab { min-height: 32px; gap: 4px; padding-inline: 7px; font-size: 12px; }
   .app-titlebar-tab svg { width: 15px; height: 15px; flex-basis: 15px; }

@@ -2,6 +2,20 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.2] - 2026-10-10
+
+### Fixed
+
+- Keep the application window within the primary display work area and discard stale window bounds that could place it off-screen.
+- Fix scaled content width and saved-result count clipping.
+- Keep trackpad and wheel scrolling within the active sidebar or content panel so reaching a scroll boundary does not shift the whole window; preserve full-page scrolling on narrow layouts.
+- Preserve the deeper highlight color when hovering the active settings navigation item.
+
+### Distribution
+
+- Provide separate macOS builds for Apple Silicon (`arm64`) and Intel (`x86_64`), and separate Windows builds for `x64` and `ARM64`.
+- macOS builds are not signed with an Apple Developer ID and are not notarized; macOS may warn or block the first launch.
+
 ## [1.1.0] - 2026-10-10
 
 ### Added
