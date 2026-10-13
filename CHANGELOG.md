@@ -2,6 +2,16 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.4] - 2026-10-13
+
+### Fixed
+
+- **ui:** center macOS traffic lights in titlebar
+
+### Changed
+
+- define agent documentation workflow
+
 ## [1.1.3] - 2026-10-10
 
 ### Fixed
