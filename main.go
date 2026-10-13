@@ -217,6 +217,7 @@ func main() {
 		switch runtime.GOOS {
 		case "darwin":
 			windowOptions.TitleBarStyle = mygo.TitleBarHiddenInset
+			windowOptions.TrafficLightPosition = &mygo.Point{X: 14, Y: 19}
 		case "windows":
 			windowOptions.TitleBarStyle = mygo.TitleBarHidden
 			windowOptions.TitleBarHeight = 48
