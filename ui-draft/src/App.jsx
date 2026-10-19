@@ -369,6 +369,7 @@ function App() {
     return SORT_OPTIONS.some((option) => option.value === stored) ? stored : 'default'
   })
   const weightGrams = parseWeightGrams(weightValue)
+  const weightInvalid = weightValue.trim() !== '' && weightGrams === 0
   const hasImmersiveTitleBar = typeof window === 'undefined'
     || !window.mygo
     || window.mygo.platform === 'darwin'
@@ -381,6 +382,7 @@ function App() {
   const [tierRangeError, setTierRangeError] = useState(false)
   const cancelTierRangeBlur = useRef(false)
   const pendingTextEdit = useRef(false)
+  const favoritesChecked = useRef(false)
   const hasTierFilter = minTier > 1 || maxTier < 10
   const hasQueryConditions = Boolean(keyword.trim() || hasTierFilter || weightGrams || groups.length || selectedAttributes.length)
   const hasFilters = hasQueryConditions || favoritesOnly
@@ -401,6 +403,23 @@ function App() {
   useEffect(() => {
     if (favoritesOnly && favorites.length === 0) setFavoritesOnly(false)
   }, [favoritesOnly, favorites])
+
+  useEffect(() => {
+    if (!eggDataClient || favoritesChecked.current || favorites.length === 0) return undefined
+    let cancelled = false
+    eggDataClient.query({ keyword: '', minTier: 1, maxTier: 10, weight: 0, eggGroups: [], attributes: [] })
+      .then((pets) => {
+        if (cancelled) return
+        favoritesChecked.current = true
+        const knownIds = new Set(pets.map((pet) => pet.id))
+        setFavorites((current) => {
+          const next = current.filter((id) => knownIds.has(id))
+          return next.length === current.length ? current : next
+        })
+      })
+      .catch((error) => console.error('无法校验收藏数据', error))
+    return () => { cancelled = true }
+  }, [eggDataClient, favorites.length])
 
   useEffect(() => {
     savePreference(RESULT_SORT_KEY, sortBy)
@@ -734,6 +753,7 @@ function App() {
               />
               <span className="weight-lookup-unit" aria-hidden="true">kg</span>
             </div>
+            {weightInvalid && <p className="weight-input-error" role="alert">请输入大于 0 的蛋重</p>}
           </section>
 
           <section className="filter-section tier-section">

@@ -144,6 +144,7 @@ img { -webkit-user-drag: none; user-select: none; }
 .weight-lookup-control { padding-right: 36px; font-variant-numeric: tabular-nums; }
 .weight-lookup-control::-webkit-outer-spin-button, .weight-lookup-control::-webkit-inner-spin-button { margin: 0; -webkit-appearance: none; }
 .weight-lookup-unit { position: absolute; top: 50%; right: 12px; color: color-mix(in srgb, var(--rk-on-paper) 52%, transparent); font-size: 13px; pointer-events: none; transform: translateY(-50%); }
+.weight-input-error { margin: 6px 0 0; color: var(--rk-danger); font-size: 13px; }
 .recent-query-list { display: flex; flex-direction: column; gap: 5px; }
 .recent-query { width: 100%; min-width: 0; overflow: hidden; padding: 7px 9px; border: 1px solid transparent; border-radius: 8px; color: var(--rk-on-stone); background: color-mix(in srgb, var(--rk-on-stone) 7%, transparent); font: inherit; font-size: 13px; text-align: left; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; transition: background-color .15s, border-color .15s; }
 .recent-query:hover { border-color: color-mix(in srgb, var(--rk-on-stone) 22%, transparent); background: color-mix(in srgb, var(--rk-on-stone) 11%, transparent); }
