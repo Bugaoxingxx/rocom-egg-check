@@ -13,6 +13,9 @@ import (
 //go:embed data/pets.json
 var embeddedData embed.FS
 
+//go:embed window-icon.png
+var windowIcon []byte
+
 type database struct {
 	Pets []Pet `json:"pets"`
 }
@@ -222,7 +225,12 @@ func main() {
 			windowOptions.TitleBarStyle = mygo.TitleBarHidden
 			windowOptions.TitleBarHeight = 48
 		}
-		mygo.NewWindow(windowOptions)
+		window := mygo.NewWindow(windowOptions)
+		if runtime.GOOS != "darwin" {
+			if err := window.SetIcon(windowIcon); err != nil {
+				log.Printf("set window icon: %v", err)
+			}
+		}
 	})
 	if err := mygo.App.Run(); err != nil {
 		log.Fatal(err)

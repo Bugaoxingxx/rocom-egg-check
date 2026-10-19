@@ -16,6 +16,7 @@
 | 路径 | 职责 |
 | --- | --- |
 | `main.go` | Go / MyGo 桌面入口；嵌入精灵数据并提供类型化查询绑定。 |
+| `window-icon.png` | 嵌入 Go 程序的 64×64 窗口图标，通过 `SetIcon` 用于 Linux 和 Windows 标题栏与任务栏；macOS 不设置窗口图标。 |
 | `data/pets.json` | 应用运行时读取的精灵及蛋重数据。 |
 | `ui-draft/src/App.jsx` | 查询页、结果卡片、主导航及设置页面。 |
 | `ui-draft/src/OffspringCalculator.jsx` | 子代计算器、迭代计算结果和记录管理。 |
