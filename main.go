@@ -56,11 +56,12 @@ type Pet struct {
 	Attributes  []string  `json:"attributes"`
 }
 
-// QueryFilter selects initial forms by name or number, tier, egg group, and attribute.
+// QueryFilter selects initial forms by name or number, tier, egg weight, egg group, and attribute.
 type QueryFilter struct {
 	Keyword    string   `json:"keyword"`
 	MinTier    int      `json:"minTier"`
 	MaxTier    int      `json:"maxTier"`
+	Weight     int      `json:"weight"`
 	EggGroups  []string `json:"eggGroups"`
 	Attributes []string `json:"attributes"`
 }
@@ -112,6 +113,10 @@ func (data *EggData) Query(filter QueryFilter) []Pet {
 	if minTier > maxTier {
 		minTier, maxTier = maxTier, minTier
 	}
+	weight := filter.Weight
+	if weight < 0 {
+		weight = 0
+	}
 
 	keyword := strings.TrimSpace(filter.Keyword)
 	numericKeyword := isNumber(keyword)
@@ -133,6 +138,9 @@ func (data *EggData) Query(filter QueryFilter) []Pet {
 	results := make([]Pet, 0)
 	for _, pet := range data.pets {
 		if pet.EggWeight.Tier < minTier || pet.EggWeight.Tier > maxTier {
+			continue
+		}
+		if weight > 0 && (weight < pet.EggWeight.Min || weight > pet.EggWeight.Max) {
 			continue
 		}
 		if keyword != "" {
